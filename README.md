@@ -1,5 +1,5 @@
 
-##UML
+## UML
 ```mermaid
 classDiagram
     DailyFood <|-- FoodConsumed
@@ -264,13 +264,15 @@ classDiagram
         #CustomOutputStream()
     }
 ```
-##Test Coverage
+## Test Coverage
 
 ![Alt Text](jacoco.png)
 ![Alt Text](jacoco1.png)
-
-<b> The test coverage excluede the App.java class, which is mainly for the swing application model and controller</b>
-##How to run
+```
+The test coverage excluede the App.java class, which is mainly for the swing application model and controller
+```
+## How to run
+```
 clone the file to local. Run the main from App.java
 user can register by their name, weight, height and target weight want to achieve
 return to the main page and log in to their information page by selecting their name and unique user id
@@ -278,3 +280,4 @@ Certain nutrition have been added to the system
 More can be added by user themselves by selecting to the 'Nutrition' button
 User can keep track what they have eaten on daily basis for certain amount of protein, carbohydrates, calories and fat, if it is reaching the gaining weight's consumption target
 User can also keep track of their weight changes.
+```
