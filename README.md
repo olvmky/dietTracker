@@ -280,5 +280,6 @@ Certain nutrition have been added to the system
 More can be added by user themselves by selecting to the 'Nutrition' button
 User can keep track what they have eaten on daily basis for certain amount of protein, carbohydrates, calories and fat, if it is reaching the gaining weight's consumption target
 User can also keep track of their weight changes.
-* Have to update file path correspond to user local path in order to run. 
+* Have to update file path correspond to user local path in order to run.
+More functions will be implement in times. 
 ```
