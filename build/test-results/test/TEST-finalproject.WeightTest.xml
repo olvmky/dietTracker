@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="finalproject.WeightTest" tests="13" skipped="0" failures="0" errors="0" timestamp="2024-04-23T21:38:24" hostname="OliviaMiuki-2.local" time="0.012">
+  <properties/>
+  <testcase name="testGetId()" classname="finalproject.WeightTest" time="0.001"/>
+  <testcase name="testSetId()" classname="finalproject.WeightTest" time="0.0"/>
+  <testcase name="testToString()" classname="finalproject.WeightTest" time="0.001"/>
+  <testcase name="testGetDate()" classname="finalproject.WeightTest" time="0.0"/>
+  <testcase name="testGetName()" classname="finalproject.WeightTest" time="0.0"/>
+  <testcase name="testSetHeight()" classname="finalproject.WeightTest" time="0.0"/>
+  <testcase name="testGetTargetWeight()" classname="finalproject.WeightTest" time="0.001"/>
+  <testcase name="testGetHeight()" classname="finalproject.WeightTest" time="0.001"/>
+  <testcase name="testSetWeight()" classname="finalproject.WeightTest" time="0.0"/>
+  <testcase name="testGetWeight()" classname="finalproject.WeightTest" time="0.0"/>
+  <testcase name="testSetDate()" classname="finalproject.WeightTest" time="0.001"/>
+  <testcase name="testSetName()" classname="finalproject.WeightTest" time="0.001"/>
+  <testcase name="testSetTargetWeight()" classname="finalproject.WeightTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

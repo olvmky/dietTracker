@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Weight.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">final-project-v2-finals</a> &gt; <a href="index.source.html" class="el_package">finalproject</a> &gt; <span class="el_source">Weight.java</span></div><h1>Weight.java</h1><pre class="source lang-java linenums">package finalproject;
+
+import java.time.LocalDate;
+
+public class Weight{
+    protected int id;
+    protected LocalDate date;
+    protected String name;
+    protected double height;
+    protected double weight; //Should be entered in lbs and transform into kg
+    protected double targetWeight;
+
+<span class="fc" id="L13">    public Weight(int id, LocalDate date, String name, double height, double weight, double targetWeight) {</span>
+<span class="fc" id="L14">        this.id = id;</span>
+<span class="fc" id="L15">        this.date = date;</span>
+<span class="fc" id="L16">        this.name = name;</span>
+<span class="fc" id="L17">        this.height = height;</span>
+<span class="fc" id="L18">        this.weight = weight;</span>
+<span class="fc" id="L19">        this.targetWeight = targetWeight;</span>
+<span class="fc" id="L20">    }</span>
+
+    public int getId() {
+<span class="fc" id="L23">        return id;</span>
+    }
+
+    public void setId(int id) {
+<span class="fc" id="L27">        this.id = id;</span>
+<span class="fc" id="L28">    }</span>
+
+    public LocalDate getDate() {
+<span class="fc" id="L31">        return date;</span>
+    }
+
+    public void setDate(LocalDate date) {
+<span class="fc" id="L35">        this.date = date;</span>
+<span class="fc" id="L36">    }</span>
+
+    public String getName() {
+<span class="fc" id="L39">        return name;</span>
+    }
+
+    public void setName(String name) {
+<span class="fc" id="L43">        this.name = name;</span>
+<span class="fc" id="L44">    }</span>
+
+    public double getHeight() {
+<span class="fc" id="L47">        return height;</span>
+    }
+
+    public void setHeight(double height) {
+<span class="fc" id="L51">        this.height = height;</span>
+<span class="fc" id="L52">    }</span>
+
+    public double getWeight() {
+<span class="fc" id="L55">        return weight;</span>
+    }
+
+    public void setWeight(double weight) {
+<span class="fc" id="L59">        this.weight = weight;</span>
+<span class="fc" id="L60">    }</span>
+
+    public double getTargetWeight() {
+<span class="fc" id="L63">        return targetWeight;</span>
+    }
+
+    public void setTargetWeight(double targetWeight) {
+<span class="fc" id="L67">        this.targetWeight = targetWeight;</span>
+<span class="fc" id="L68">    }</span>
+
+    @Override
+    public String toString() {
+<span class="fc" id="L72">        return  id + &quot;,&quot; + date + &quot;,&quot; + name + &quot;,&quot; + height + &quot;,&quot; + weight + &quot;,&quot; + targetWeight;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>

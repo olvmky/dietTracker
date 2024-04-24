@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Function.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">final-project-v2-finals</a> &gt; <a href="index.source.html" class="el_package">finalproject</a> &gt; <span class="el_source">Function.java</span></div><h1>Function.java</h1><pre class="source lang-java linenums">package finalproject;
+
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.chrono.ChronoLocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.Scanner;
+import java.util.stream.Stream;
+
+<span class="fc" id="L16">public class Function {</span>
+    protected static final String newUserWeightFilePath = &quot;/Users/oliviamiuki/final-project-v2-finals/newuserweight.csv&quot;;
+    protected static final String dailyWeightFilePath = &quot;/Users/oliviamiuki/final-project-v2-finals/dailyweight.csv&quot;;
+    protected static final String dailyFoodFilePath = &quot;/Users/oliviamiuki/final-project-v2-finals/dailyfood.csv&quot;;
+    protected static final String nutritionFilPath = &quot;/Users/oliviamiuki/final-project-v2-finals/foodnutrition.csv&quot;;
+
+<span class="fc" id="L22">    protected static WeightManager weightManager = new WeightManager();</span>
+<span class="fc" id="L23">    protected static Calculation calculation = new Calculation();</span>
+
+    /**
+     * Create new User and their body info
+     *  a new daily weight file and daily food file will be creat at the same time
+     */
+    public static Weight newUserWeight(String name, double height, double weight, double targetWeight){
+<span class="fc" id="L30">        LocalDate currentDate = LocalDate.now(); //Get today's date</span>
+<span class="fc" id="L31">        int id = weightManager.generateRandomNumericId();</span>
+<span class="fc" id="L32">        Weight newUser = new Weight(id, currentDate, name, height, weight, targetWeight);</span>
+        //Add new user info into local file
+<span class="fc" id="L34">        try (FileWriter writer = new FileWriter(newUserWeightFilePath, true);</span>
+<span class="fc" id="L35">             BufferedWriter bw = new BufferedWriter(writer);</span>
+<span class="fc" id="L36">             PrintWriter out = new PrintWriter(bw)) {</span>
+<span class="pc bpc" id="L37" title="1 of 2 branches missed.">            if (!new File(newUserWeightFilePath).exists()) {</span>
+<span class="nc" id="L38">                out.println(newUserWeightFilePath);</span>
+            }
+<span class="fc" id="L40">            out.println(newUser.toString());</span>
+<span class="fc" id="L41">            System.out.println(&quot;new user's weight info have been added successfully!&quot;);</span>
+<span class="fc" id="L42">            System.out.println(newUser.toString());</span>
+//            DailyWeight dailyWeight = addDailyWeight(id, name, weight);
+//            System.out.println(&quot;new user's daily weight have been added.&quot;);
+//            System.out.println(dailyWeight.toString());
+<span class="nc" id="L46">        } catch (IOException e) {</span>
+<span class="nc" id="L47">            System.out.println(&quot;Error occurred while adding new User: &quot; + e.getMessage());</span>
+<span class="nc" id="L48">            e.printStackTrace();</span>
+<span class="fc" id="L49">        }</span>
+<span class="fc" id="L50">        return newUser;</span>
+    }
+
+    /**
+     * Create new user daily weight file and add in their first weight
+     * @param
+     */
+    public void addDailyWeight(int id, String name, double weight){
+<span class="fc" id="L58">        DailyWeight dailyWeight = null;</span>
+<span class="fc" id="L59">        try (FileWriter writer = new FileWriter(dailyWeightFilePath, true);</span>
+<span class="fc" id="L60">             BufferedWriter bw = new BufferedWriter(writer);</span>
+<span class="fc" id="L61">             PrintWriter out = new PrintWriter(bw)) {</span>
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">            if (!new File(newUserWeightFilePath).exists()) {</span>
+<span class="nc" id="L63">                out.println(newUserWeightFilePath);</span>
+            }
+<span class="fc" id="L65">            LocalDate date = LocalDate.now();</span>
+<span class="fc" id="L66">            dailyWeight = new DailyWeight(id, date, weight);</span>
+<span class="fc" id="L67">            out.println(dailyWeight.toString());</span>
+<span class="nc" id="L68">        } catch (IOException e) {</span>
+<span class="nc" id="L69">            System.out.println(&quot;Can't find daily weight file&quot;);</span>
+<span class="nc" id="L70">            e.printStackTrace();</span>
+<span class="fc" id="L71">        }</span>
+<span class="fc" id="L72">    }</span>
+
+    /**
+     * Create new user daily weight file and add in their first weight
+     * @param
+     */
+    public static void addDailyFood(int userId, String ingre, Category category, double weight){
+<span class="fc" id="L79">        DailyFood dailyFood = null;</span>
+
+<span class="fc" id="L81">        try (FileWriter writer = new FileWriter(dailyFoodFilePath, true);</span>
+<span class="fc" id="L82">             BufferedWriter bw = new BufferedWriter(writer);</span>
+<span class="fc" id="L83">             PrintWriter out = new PrintWriter(bw)) {</span>
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">            if (!new File(dailyFoodFilePath).exists()) {</span>
+<span class="nc" id="L85">                out.println(dailyFoodFilePath);</span>
+            }
+<span class="fc" id="L87">            LocalDate date = LocalDate.now();</span>
+<span class="fc" id="L88">            dailyFood = new DailyFood(userId, date, ingre, category, weight);</span>
+<span class="fc" id="L89">            List&lt;String[]&gt; foodNutrition = readFileContents(nutritionFilPath);</span>
+<span class="fc" id="L90">            String[] food = null;</span>
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">            for(String[] i: foodNutrition){</span>
+<span class="pc bpc" id="L92" title="2 of 4 branches missed.">                if(i[1].equals(ingre) || i[1].contains(ingre)){</span>
+<span class="fc" id="L93">                    food = i;</span>
+<span class="fc" id="L94">                    break;</span>
+                }
+<span class="nc" id="L96">            }</span>
+<span class="fc" id="L97">            FoodConsumed foodConsumed = calculation.convertNutrition(dailyFood, food);</span>
+<span class="fc" id="L98">            out.println(foodConsumed.toString());</span>
+<span class="nc" id="L99">        } catch (IOException e) {</span>
+<span class="nc" id="L100">            System.out.println(&quot;Can't find daily weight file&quot;);</span>
+<span class="nc" id="L101">            e.printStackTrace();</span>
+<span class="fc" id="L102">        }</span>
+<span class="fc" id="L103">    }</span>
+
+    public static List&lt;String[]&gt; readFileContents(String filePath) throws IOException {
+<span class="fc" id="L106">        List&lt;String[]&gt; list = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L107">        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {</span>
+            String line;
+<span class="fc" id="L109">            boolean firstLine = true;</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">            while ((line = reader.readLine()) != null) {</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">                if (firstLine) { // Skip the header line</span>
+<span class="fc" id="L112">                    firstLine = false;</span>
+<span class="fc" id="L113">                    continue;</span>
+                }
+<span class="fc" id="L115">                String[] parts = line.split(&quot;,&quot;);</span>
+<span class="fc" id="L116">                list.add(parts);</span>
+<span class="fc" id="L117">            }</span>
+<span class="nc" id="L118">        } catch (IOException e) {</span>
+<span class="nc" id="L119">            System.err.println(&quot;Error reading file: &quot; + filePath + &quot;\n&quot; + e.getMessage());</span>
+<span class="fc" id="L120">        }</span>
+<span class="fc" id="L121">        return list;</span>
+    }
+
+    /**
+     * Read data from files, retrieve the target consumption per day
+     * @param userId
+     * @return
+     */
+    public Target targetConsumption(int userId) throws IOException {
+<span class="fc" id="L130">        List&lt;String[]&gt; data = readFileContents(newUserWeightFilePath);</span>
+<span class="fc" id="L131">        double targetWeight = 0;</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">        for(String[] i: data){</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">            if(i[0].equals(String.valueOf(userId))){</span>
+<span class="fc" id="L134">                targetWeight = Double.parseDouble(i[5]);</span>
+<span class="fc" id="L135">                break;</span>
+            }
+<span class="fc" id="L137">        }</span>
+<span class="fc" id="L138">        double weight = calculation.lbsToKg(targetWeight);</span>
+<span class="fc" id="L139">        Target target = calculation.targetConsumption(weight);</span>
+<span class="fc" id="L140">        return target;</span>
+    }
+
+    /**
+     *
+     * @param userId
+     * @param index 0 for breakfast, 1 for lunch, 2 for dinner, 3 for snack and 4 for total consumption
+     * @return
+     */
+    public Target consumptionByCategory(int userId, int index) throws IOException {
+<span class="fc" id="L150">        List&lt;String[]&gt; data = readFileContents(dailyFoodFilePath);</span>
+<span class="fc" id="L151">        LocalDate currentDate = LocalDate.now();</span>
+<span class="fc" id="L152">        List&lt;String[]&gt; filteredData = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">        for(String[] i: data){</span>
+<span class="pc bpc" id="L154" title="1 of 4 branches missed.">            if(i[0].equals(String.valueOf(userId)) &amp;&amp; currentDate.toString().equals(i[1])){</span>
+<span class="fc" id="L155">                filteredData.add(i);</span>
+            }
+<span class="fc" id="L157">        }</span>
+<span class="fc" id="L158">        double protein = 0, carb = 0, calories = 0, fat = 0;</span>
+<span class="fc" id="L159">        String category = null;</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">        if(index == 0) category = &quot;BREAKFAST&quot;;</span>
+<span class="pc bpc" id="L161" title="1 of 2 branches missed.">        else if(index == 1) category = &quot;LUNCH&quot;;</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">        else if(index == 2) category = &quot;DINNER&quot;;</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">        else if(index == 3) category = &quot;SNACK&quot;;</span>
+<span class="fc bfc" id="L164" title="All 2 branches covered.">        for(String[] i:filteredData){</span>
+<span class="pc bpc" id="L165" title="1 of 4 branches missed.">            if(category != null &amp;&amp; i[3].equals(category)){</span>
+<span class="fc" id="L166">                protein += Double.parseDouble(i[6]);</span>
+<span class="fc" id="L167">                carb += Double.parseDouble(i[7]);</span>
+<span class="fc" id="L168">                calories += Double.parseDouble(i[5]);</span>
+<span class="fc" id="L169">                fat += Double.parseDouble(i[8]);</span>
+            } else{
+<span class="fc" id="L171">                protein += Double.parseDouble(i[6]);</span>
+<span class="fc" id="L172">                carb += Double.parseDouble(i[7]);</span>
+<span class="fc" id="L173">                calories += Double.parseDouble(i[5]);</span>
+<span class="fc" id="L174">                fat += Double.parseDouble(i[8]);</span>
+            }
+<span class="fc" id="L176">        }</span>
+<span class="fc" id="L177">        Target newTarget = new Target(protein, carb, calories, fat);</span>
+<span class="fc" id="L178">        return newTarget;</span>
+    }
+
+    public List&lt;String[]&gt; dailyConsumption(int userId) throws IOException {
+<span class="fc" id="L182">        List&lt;String[]&gt; data = readFileContents(dailyFoodFilePath);</span>
+<span class="fc" id="L183">        List&lt;String[]&gt; filteredData = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L184" title="All 2 branches covered.">        for(String[] i: data){</span>
+<span class="pc bpc" id="L185" title="1 of 2 branches missed.">            if(i[0].equals(String.valueOf(userId))){</span>
+<span class="fc" id="L186">                filteredData.add(i);</span>
+            }
+<span class="fc" id="L188">        }</span>
+<span class="fc" id="L189">        return filteredData;</span>
+    }
+
+    public Category stringToCate(String text){
+<span class="pc bpc" id="L193" title="1 of 2 branches missed.">        if(text.equals(&quot;BREAKFAST&quot;)) return Category.BREAKFAST;</span>
+<span class="nc bnc" id="L194" title="All 2 branches missed.">        else if(text.equals(&quot;LUNCH&quot;)) return Category.LUNCH;</span>
+<span class="nc bnc" id="L195" title="All 2 branches missed.">        else if(text.equals(&quot;DINNER&quot;)) return Category.DINNER;</span>
+<span class="nc" id="L196">        else return Category.SNACK;</span>
+    }
+
+    public FoodCategory stringToCategory(String text){
+<span class="pc bpc" id="L200" title="1 of 2 branches missed.">        if(text.equals(&quot;MAIN&quot;)) return FoodCategory.MAIN;</span>
+<span class="pc bpc" id="L201" title="1 of 2 branches missed.">        else if(text.equals(&quot;MEAT&quot;)) return FoodCategory.MEAT;</span>
+<span class="nc bnc" id="L202" title="All 2 branches missed.">        else if(text.equals(&quot;DRINK&quot;)) return FoodCategory.DRINK;</span>
+<span class="nc" id="L203">        else return FoodCategory.MISC;</span>
+    }
+
+    /**
+     * Return a list of String of nutrition names that's corresponding to the given
+     * @param name
+     * @param option 0 for category filter, 1 for name, 2 for carb &gt; 15%, 3 for protein &gt; 15%
+     * @return
+     */
+    public List&lt;String[]&gt; nutritionFilter(String name, int option) throws IOException {
+<span class="fc" id="L213">        name = name.toUpperCase();</span>
+<span class="fc" id="L214">        List&lt;String[]&gt; res = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L215">        List&lt;String[]&gt; list = readFileContents(nutritionFilPath);</span>
+<span class="fc bfc" id="L216" title="All 2 branches covered.">        for(String[] i:list){</span>
+<span class="pc bpc" id="L217" title="2 of 4 branches missed.">            if(option == 2 || option == 3){</span>
+<span class="nc" id="L218">                double curr = Double.parseDouble(i[option]);</span>
+<span class="nc bnc" id="L219" title="All 2 branches missed.">                if(curr &gt; 15) res.add(i);</span>
+<span class="pc bfc" id="L220" title="All 2 branches covered.">            } else if(i[option].contains(name)) res.add(i);</span>
+<span class="pc bpc" id="L221" title="3 of 4 branches missed.">            else if(option == 0 &amp;&amp; name.equals(&quot;CATEGORY&quot;)){</span>
+<span class="nc" id="L222">                return list;</span>
+            }
+<span class="fc" id="L224">        }</span>
+<span class="fc" id="L225">        return res;</span>
+    }
+
+    public List&lt;String[]&gt; weightInfo(int userId) throws IOException {
+<span class="fc" id="L229">        List&lt;String[]&gt; data = readFileContents(dailyWeightFilePath);</span>
+<span class="fc" id="L230">        List&lt;String[]&gt; list = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L231" title="All 2 branches covered.">        for(String[] i:data){</span>
+<span class="fc bfc" id="L232" title="All 2 branches covered.">            if(userId == Integer.parseInt(i[0])){</span>
+<span class="fc" id="L233">                list.add(i);</span>
+            }
+<span class="fc" id="L235">        }</span>
+<span class="fc" id="L236">        return list;</span>
+    }
+
+    public Double[] weightDifference(int userId) throws IOException {
+<span class="fc" id="L240">        List&lt;String[]&gt; data = weightInfo(userId);</span>
+<span class="fc" id="L241">        double firstDayWeight = Double.parseDouble(data.get(0)[2]);</span>
+<span class="fc" id="L242">        double yesterdayWeight = Double.parseDouble(data.get(data.size() - 2)[2]);</span>
+<span class="fc" id="L243">        double currentWeight = Double.parseDouble(data.get(data.size() - 1)[2]);</span>
+<span class="fc" id="L244">        Double[] diff = new Double[2];</span>
+<span class="fc" id="L245">        diff[0] = currentWeight - firstDayWeight;</span>
+<span class="fc" id="L246">        diff[1] = currentWeight - yesterdayWeight;</span>
+<span class="fc" id="L247">        return diff;</span>
+    }
+
+    public long daysUsedApp(int userId) throws IOException {
+<span class="fc" id="L251">        List&lt;String[]&gt; data = weightInfo(userId);</span>
+<span class="fc" id="L252">        LocalDate currentDate = LocalDate.now();</span>
+<span class="fc" id="L253">        String firstDay = data.get(0)[1];</span>
+<span class="fc" id="L254">        LocalDate firstDayDate = LocalDate.parse(firstDay);</span>
+<span class="fc" id="L255">        long diff = ChronoUnit.DAYS.between(currentDate, firstDayDate);</span>
+<span class="fc" id="L256">        return diff;</span>
+    }
+
+    public String dayRegister(int userId) throws IOException {
+<span class="fc" id="L260">        List&lt;String[]&gt; data = weightInfo(userId);</span>
+<span class="fc" id="L261">        return data.get(0)[1];</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>

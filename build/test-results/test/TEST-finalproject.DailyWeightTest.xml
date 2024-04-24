@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="finalproject.DailyWeightTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2024-04-23T21:38:23" hostname="OliviaMiuki-2.local" time="0.009">
+  <properties/>
+  <testcase name="testToString()" classname="finalproject.DailyWeightTest" time="0.006"/>
+  <testcase name="testConstructorAndGetters()" classname="finalproject.DailyWeightTest" time="0.001"/>
+  <testcase name="testSetWeight()" classname="finalproject.DailyWeightTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

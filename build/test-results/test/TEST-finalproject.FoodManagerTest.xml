@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="finalproject.FoodManagerTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2024-04-23T21:38:23" hostname="OliviaMiuki-2.local" time="0.018">
+  <properties/>
+  <testcase name="testStrToCategory()" classname="finalproject.FoodManagerTest" time="0.002"/>
+  <testcase name="testAddDailyFood()" classname="finalproject.FoodManagerTest" time="0.001"/>
+  <testcase name="testAddNewFoodNutrition()" classname="finalproject.FoodManagerTest" time="0.013"/>
+  <system-out><![CDATA[food's info have been added successfully!
+MISC,APPLE,25.0,0.5,95.0,0.3
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

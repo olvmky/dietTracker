@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FoodManager.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">final-project-v2-finals</a> &gt; <a href="index.source.html" class="el_package">finalproject</a> &gt; <span class="el_source">FoodManager.java</span></div><h1>FoodManager.java</h1><pre class="source lang-java linenums">package finalproject;
+
+import java.io.*;
+import java.time.LocalDate;
+
+<span class="fc" id="L6">public class FoodManager {</span>
+<span class="fc" id="L7">    protected final String foodNutritionFilePath = &quot;/Users/oliviamiuki/final-project-v2-finals/foodnutrition.csv&quot;;</span>
+    /**
+     * Add new food nutrition into food and into file
+     * @param name
+     * @param carb
+     * @param protein
+     * @param calories
+     * @param fat
+     */
+    public void addNewFoodNutrition(FoodCategory foodCategory, String name,
+                                    double carb, double protein, double calories, double fat){
+<span class="fc" id="L18">        name = name.toUpperCase();</span>
+<span class="fc" id="L19">        Food newFood = new Food(foodCategory, name, carb, protein, calories, fat);</span>
+        //Add new user info into local file
+<span class="fc" id="L21">        try (FileWriter writer = new FileWriter(foodNutritionFilePath, true);</span>
+<span class="fc" id="L22">             BufferedWriter bw = new BufferedWriter(writer);</span>
+<span class="fc" id="L23">             PrintWriter out = new PrintWriter(bw)) {</span>
+<span class="pc bpc" id="L24" title="1 of 2 branches missed.">            if (!new File(foodNutritionFilePath).exists()) {</span>
+<span class="nc" id="L25">                out.println(foodNutritionFilePath);</span>
+            }
+<span class="fc" id="L27">            out.println(newFood.toString());</span>
+<span class="fc" id="L28">            System.out.println(&quot;food's info have been added successfully!&quot;);</span>
+<span class="fc" id="L29">            System.out.println(newFood.toString());</span>
+<span class="nc" id="L30">        } catch (IOException e) {</span>
+<span class="nc" id="L31">            System.out.println(&quot;Error occurred while adding new food: &quot; + e.getMessage());</span>
+<span class="fc" id="L32">        }</span>
+<span class="fc" id="L33">    }</span>
+
+    /**
+     * Add food consumed for each meal
+     */
+    public void addDailyFood(int id, String name, Category category, int weight){
+<span class="fc" id="L39">        LocalDate localDate = LocalDate.now();</span>
+<span class="fc" id="L40">        name = name.toLowerCase();</span>
+<span class="fc" id="L41">        DailyFood dailyFood = new DailyFood(id, localDate, name, category, weight);</span>
+<span class="fc" id="L42">    }</span>
+
+    /**
+     * Converting string into Category by corresponding enum values
+     *  Default values are SNAK
+     * @param cateogry A String representing the category
+     * @return
+     */
+    public Category strToCategory(String cateogry){
+<span class="fc bfc" id="L51" title="All 2 branches covered.">        if(cateogry.equals(&quot;BREAKFAST&quot;)) return Category.BREAKFAST;</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">        else if(cateogry.equals(&quot;LUNCH&quot;)) return Category.LUNCH;</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">        else if(cateogry.equals(&quot;DINNER&quot;)) return Category.DINNER;</span>
+<span class="fc" id="L54">        else return Category.SNACK;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>

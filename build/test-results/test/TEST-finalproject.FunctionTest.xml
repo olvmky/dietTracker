@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="finalproject.FunctionTest" tests="16" skipped="0" failures="0" errors="0" timestamp="2024-04-23T21:38:24" hostname="OliviaMiuki-2.local" time="0.058">
+  <properties/>
+  <testcase name="testDayRegister()" classname="finalproject.FunctionTest" time="0.007"/>
+  <testcase name="testDaysUsedApp()" classname="finalproject.FunctionTest" time="0.008"/>
+  <testcase name="testConsumptionByCategory()" classname="finalproject.FunctionTest" time="0.003"/>
+  <testcase name="testAddDailyWeight()" classname="finalproject.FunctionTest" time="0.001"/>
+  <testcase name="testStringToCategory()" classname="finalproject.FunctionTest" time="0.001"/>
+  <testcase name="testAddDailyFood()" classname="finalproject.FunctionTest" time="0.002"/>
+  <testcase name="testDailyConsumption()" classname="finalproject.FunctionTest" time="0.002"/>
+  <testcase name="testReadFileContents()" classname="finalproject.FunctionTest" time="0.001"/>
+  <testcase name="testNewUserWeight()" classname="finalproject.FunctionTest" time="0.007"/>
+  <testcase name="testWeightDifference()" classname="finalproject.FunctionTest" time="0.001"/>
+  <testcase name="testNutritionFilter()" classname="finalproject.FunctionTest" time="0.001"/>
+  <testcase name="testTargetConsumption()" classname="finalproject.FunctionTest" time="0.001"/>
+  <testcase name="testTargetConsumption_EmptyUserData()" classname="finalproject.FunctionTest" time="0.001"/>
+  <testcase name="testStringToCate()" classname="finalproject.FunctionTest" time="0.001"/>
+  <testcase name="testAddNewUserWeight()" classname="finalproject.FunctionTest" time="0.002"/>
+  <testcase name="testWeightInfo()" classname="finalproject.FunctionTest" time="0.002"/>
+  <system-out><![CDATA[new user's weight info have been added successfully!
+6418,2024-04-23,John,175.0,75.0,70.0
+new user's weight info have been added successfully!
+2467,2024-04-23,John,175.0,75.0,70.0
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

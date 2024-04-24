@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="finalproject.DailyFoodTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2024-04-23T21:38:23" hostname="OliviaMiuki-2.local" time="0.012">
+  <properties/>
+  <testcase name="testToString()" classname="finalproject.DailyFoodTest" time="0.009"/>
+  <testcase name="testConstructorAndGetters()" classname="finalproject.DailyFoodTest" time="0.001"/>
+  <testcase name="testSetters()" classname="finalproject.DailyFoodTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

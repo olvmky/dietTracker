@@ -1,0 +1,48 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'jacoco'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', includes: ['*.jar'])
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    implementation 'org.jfree:jfreechart:1.5.3'
+    testImplementation 'org.mockito:mockito-core:3.12.4'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+jacoco {
+    toolVersion = "0.8.9"
+    reportsDirectory.set(layout.buildDirectory.dir("customJacocoReportDir"))
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+    reports {
+        xml.required.set(false)
+        csv.required.set(false)
+        html.outputLocation.set(layout.buildDirectory.dir("jacocoHtml"))
+    }
+}
+
+tasks.jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = "0.8".toBigDecimal()
+            }
+        }
+    }
+}
