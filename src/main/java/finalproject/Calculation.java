@@ -7,10 +7,10 @@ import java.time.LocalDate;
  */
 public class Calculation {
     protected Weight weight;
-    protected int protein;
-    protected int carb;
-    protected int calories;
-    protected int fat;
+    protected double protein;
+    protected double carb;
+    protected double calories;
+    protected double fat;
 
     /**
      * Calculates the target consumption of calories, carbs, protein, and fat per day based on weight.
@@ -19,10 +19,10 @@ public class Calculation {
      * @return The target consumption for the user
      */
     public Target targetConsumption(double weight){
-        carb = (int)Math.ceil(weight * 4);
-        protein = (int)Math.ceil(weight * 2);
-        fat = (int)Math.ceil(weight * 1);
-        calories = (int)Math.ceil(((weight * 48.5 + 2954.7) / 4.184) * 1.6 + 500);
+        carb = weight * 4;
+        protein = weight * 2;
+        fat = weight * 1;
+        calories = ((weight * 48.5 + 2954.7) / 4.184) * 1.6 + 500;
         Target target = new Target(protein, carb, calories, fat);
         return target;
     }

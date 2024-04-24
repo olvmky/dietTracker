@@ -18,10 +18,10 @@ import java.util.stream.Stream;
  * retrieving target consumption, filtering nutrition data, and providing weight-related information.
  */
 public class Function {
-    protected static final String newUserWeightFilePath = "/Users/oliviamiuki/final-project-v2-finals/newuserweight.csv";
-    protected static final String dailyWeightFilePath = "/Users/oliviamiuki/final-project-v2-finals/dailyweight.csv";
-    protected static final String dailyFoodFilePath = "/Users/oliviamiuki/final-project-v2-finals/dailyfood.csv";
-    protected static final String nutritionFilPath = "/Users/oliviamiuki/final-project-v2-finals/foodnutrition.csv";
+    protected static final String newUserWeightFilePath = "/Users/oliviamiuki/dietTracker/newuserweight.csv";
+    protected static final String dailyWeightFilePath = "/Users/oliviamiuki/dietTracker/dailyweight.csv";
+    protected static final String dailyFoodFilePath = "/Users/oliviamiuki/dietTracker/dailyfood.csv";
+    protected static final String nutritionFilPath = "/Users/oliviamiuki/dietTracker/foodnutrition.csv";
 
     protected static Calculation calculation = new Calculation();
 

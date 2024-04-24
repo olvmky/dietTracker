@@ -27,13 +27,13 @@ import java.util.List;
  */
 public class App extends JFrame {
     protected static final String newUserWeightFilePath =
-            "/Users/oliviamiuki/final-project-v2-finals/newuserweight.csv";
+            "/Users/oliviamiuki/dietTracker/newuserweight.csv";
     protected static final String foodNutritionFilePath =
-            "/Users/oliviamiuki/final-project-v2-finals/foodnutrition.csv";
+            "/Users/oliviamiuki/dietTracker/foodnutrition.csv";
     protected static final String weightFilePath =
-            "/Users/oliviamiuki/final-project-v2-finals/dailyweight.csv";
+            "/Users/oliviamiuki/dietTracker/dailyweight.csv";
     protected static final String dietFilePath =
-            "/Users/oliviamiuki/final-project-v2-finals/dailyfood.csv";
+            "/Users/oliviamiuki/dietTracker/dailyfood.csv";
     private JButton newUserButton;
     private JButton backFrontButton;
     private JButton registerSubmitButton;

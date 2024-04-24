@@ -8,7 +8,7 @@ import java.util.*;
  * Manages weight data for users, including generating unique numeric IDs and retrieving existing IDs from files.
  */
 public class WeightManager {
-    protected String newUserWeightFilePath = "/Users/oliviamiuki/final-project-v2-finals/newuserweight.csv";
+    protected String newUserWeightFilePath = "/Users/oliviamiuki/dietTracker/newuserweight.csv";
     private static Set<String> generatedIds = new HashSet<>();
 
     /**
