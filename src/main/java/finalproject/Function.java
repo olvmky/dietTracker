@@ -120,7 +120,7 @@ public class Function {
      * @return A list of string arrays containing the file contents.
      * @throws IOException If an I/O error occurs while reading the file.
      */
-    public static List<String[]> readFileContents(String filePath) throws IOException {
+    public static List<String[]> readFileContents(String filePath){
         List<String[]> list = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
@@ -143,20 +143,25 @@ public class Function {
      * Retrieves the target consumption per day for a user based on their weight data.
      *
      * @param userId The unique identifier of the user.
+     * @param index 0 for target weight and 1 for most recently weight
      * @return The Target object representing the target consumption per day.
      * @throws IOException If an I/O error occurs while reading the user weight file.
      */
-    public Target targetConsumption(int userId) throws IOException {
-        List<String[]> data = readFileContents(newUserWeightFilePath);
+    public Target targetConsumption(int userId, int index) {
+        Target target = null;
+        List<String[]> data = readFileContents(dailyWeightFilePath);
         double targetWeight = 0;
         for(String[] i: data){
-            if(i[0].equals(String.valueOf(userId))){
-                targetWeight = Double.parseDouble(i[5]);
+            if(index == 0 && i[0].equals(String.valueOf(userId))){
+                targetWeight = Double.parseDouble(i[2]);
                 break;
+            } else if(index == 1 && i[0].equals(String.valueOf(userId))){
+                targetWeight = Double.parseDouble(i[2]);
             }
         }
         double weight = calculation.lbsToKg(targetWeight);
-        Target target = calculation.targetConsumption(weight);
+        if(index == 0) target = calculation.targetConsumption(weight);
+        else target = calculation.minConsumption(weight);
         return target;
     }
 
@@ -169,7 +174,7 @@ public class Function {
      * @return The Target object representing the consumption for the specified category.
      * @throws IOException If an I/O error occurs while reading the daily food file.
      */
-    public Target consumptionByCategory(int userId, int index) throws IOException {
+    public Target consumptionByCategory(int userId, int index){
         List<String[]> data = readFileContents(dailyFoodFilePath);
         LocalDate currentDate = LocalDate.now();
         List<String[]> filteredData = new ArrayList<>();
@@ -240,7 +245,7 @@ public class Function {
      * @return A list of string arrays containing the filtered nutrition data.
      * @throws IOException If an I/O error occurs while reading the nutrition file.
      */
-    public List<String[]> nutritionFilter(String name, int option) throws IOException {
+    public List<String[]> nutritionFilter(String name, int option) {
         name = name.toUpperCase();
         List<String[]> res = new ArrayList<>();
         List<String[]> list = readFileContents(nutritionFilPath);

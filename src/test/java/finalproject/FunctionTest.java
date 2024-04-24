@@ -24,7 +24,7 @@ class FunctionTest {
     void testTargetConsumption() throws IOException {
         Function function = new Function();
         int userId = 988; // Assuming user ID 1
-        Target target = function.targetConsumption(userId);
+        Target target = function.targetConsumption(userId, 0);
 
         // You can add assertions here to check if the target is calculated correctly
         assertNotNull(target);
@@ -193,7 +193,7 @@ class FunctionTest {
         int userId = 999; // Assuming user ID for non-existent user
 
         // Ensure the method handles empty user data gracefully
-        assertNotNull(function.targetConsumption(userId));
+        assertNotNull(function.targetConsumption(userId, 0));
     }
 
 //    @Test

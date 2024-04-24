@@ -473,11 +473,7 @@ public class App extends JFrame {
         });
 
         dietButton.addActionListener(e -> {
-            try {
-                backToDiet();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            backToDiet();
         });
 
         /**
@@ -499,11 +495,7 @@ public class App extends JFrame {
          * back buttom for going back to main page
          */
         backFrontButton.addActionListener(e -> {
-            try {
-                backToMain();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            backToMain();
         });
 
         /**
@@ -511,11 +503,7 @@ public class App extends JFrame {
          */
         nutritionButton.addActionListener(e -> {
             backToNutrition();
-            try {
-                updateNutritionTable();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            updateNutritionTable();
         });
 
         /**
@@ -523,44 +511,24 @@ public class App extends JFrame {
          */
         registerNutritionButton.addActionListener(e -> {
             backToNutrition();
-            try {
-                updateNutritionTable();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            updateNutritionTable();
         });
 
         nutDietButtom.addActionListener(e -> {
-            try {
-                backToDiet();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            backToDiet();
         });
 
         nutMainButton.addActionListener(e -> {
-            try {
-                backToMain();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            backToMain();
         });
 
         dietMainButton.addActionListener(e -> {
-            try {
-                backToMain();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            backToMain();
         });
 
         dietNutButton.addActionListener(e -> {
             backToNutrition();
-            try {
-                updateNutritionTable();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            updateNutritionTable();
         });
 
         nutAddButton.addActionListener(e -> {
@@ -572,11 +540,7 @@ public class App extends JFrame {
             double calories = Double.parseDouble(nutCaloriesInput.getText());
             double fat = Double.parseDouble(nutFatInput.getText());
             foodManager.addNewFoodNutrition(foodCategory, name, carb, protein, calories, fat);
-            try {
-                updateNutritionTable();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            updateNutritionTable();
         });
 
         /**
@@ -584,11 +548,7 @@ public class App extends JFrame {
          */
         nutInputSubmitButton.addActionListener(e -> {
             String text = nutFoodInput.getText();
-            try {
-                updateNutritionTableByName(text, 1);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            updateNutritionTableByName(text, 1);
         });
 
         /**
@@ -596,11 +556,7 @@ public class App extends JFrame {
          */
         nutCategorySelection.addActionListener(e -> {
             String text = (String) nutCategorySelection.getSelectedItem();
-            try {
-                updateNutritionTableByName(text, 0);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            updateNutritionTableByName(text, 0);
         });
 
         /**
@@ -611,18 +567,10 @@ public class App extends JFrame {
             String text = (String) nutFilterBox.getSelectedItem();
             int option = text.equals("PROTEIN > 15%") ? 3:2;
             if(text.equals("FILTER BY")) {
-                try {
-                    updateNutritionTable();
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
+                updateNutritionTable();
             }
             else {
-                try {
-                    updateNutritionTableByName("", option);
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
+                updateNutritionTableByName("", option);
             }
         });
 
@@ -634,16 +582,8 @@ public class App extends JFrame {
             Category category = foodManager.strToCategory(text);
             double weight = Double.parseDouble(dietWeightInput.getText());
             function.addDailyFood(userId, ingredient, category, weight);
-            try {
-                updateDietText();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-            try {
-                updateDietTable();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            updateDietText();
+            updateDietTable();
 
         });
 
@@ -677,21 +617,13 @@ public class App extends JFrame {
         });
 
         weightMainButton.addActionListener(e -> {
-            try {
-                backToMain();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            backToMain();
         });
 
         weightNutritionButton.addActionListener(e -> backToNutrition());
 
         weightDietButton.addActionListener(e -> {
-            try {
-                backToDiet();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            backToDiet();
         });
 
         nutWeightTrackButton.addActionListener(e -> backToWeight());
@@ -726,7 +658,7 @@ public class App extends JFrame {
      * Provides methods for navigating back to different panels in the GUI and updating their content.
      * These methods are primarily used for switching between different views and updating the displayed information.
      */
-    private void backToDiet() throws IOException {
+    private void backToDiet() {
         getContentPane().removeAll();
         updateDietTable();
         getContentPane().add(dietPanel);
@@ -760,7 +692,7 @@ public class App extends JFrame {
      * This method also triggers the update of existing user commands.
      * @throws IOException if an I/O error occurs while updating existing user commands.
      */
-    private void backToMain() throws IOException {
+    private void backToMain() {
         getContentPane().removeAll();
         existingUserCommand();
         getContentPane().add(centerWrapperPanel);
@@ -770,11 +702,10 @@ public class App extends JFrame {
 
     /**
      * Updates the text displayed in the diet panel based on user data.
-     * @throws IOException if an I/O error occurs while updating the diet text.
      */
-    private void updateDietText() throws IOException {
+    private void updateDietText() {
         dietMidRightPanel.removeAll();
-        Target target = function.targetConsumption(userId);
+        Target target = function.targetConsumption(userId, 0);
 
         //Today's today consumption
         Target currTotalConsumption = function.consumptionByCategory(userId, 4);
@@ -798,6 +729,24 @@ public class App extends JFrame {
         dietMidRightPanel.add(targetProtein);
         dietMidRightPanel.add(targetCalories);
         dietMidRightPanel.add(targetFat);
+
+        JLabel minHeading = new JLabel("MINIMUM CONSUMPTION FOR THE DAY: ");
+        minHeading.setAlignmentX(Component.CENTER_ALIGNMENT);
+        minHeading.setFont(new Font("Arial", Font.BOLD, 12));
+        dietMidRightPanel.add(minHeading);
+
+        Target minTarget = function.targetConsumption(userId, 1);
+        Target minDiff = calculation.consumptionDiff(minTarget, currTotalConsumption);
+
+        JLabel minCarb = new JLabel("CARB: " + minDiff.getCarb());
+        JLabel minProtein = new JLabel("PROTEIN: " + minDiff.getProtein());
+        JLabel minCalories = new JLabel("CALORIES: " + minDiff.getCalories());
+        JLabel minFat = new JLabel("FAT: " + minDiff.getFat());
+
+        dietMidRightPanel.add(minCarb);
+        dietMidRightPanel.add(minProtein);
+        dietMidRightPanel.add(minCalories);
+        dietMidRightPanel.add(minFat);
     }
 
     /**
@@ -905,7 +854,7 @@ public class App extends JFrame {
      * @param option The filtering option.
      * @throws IOException if an I/O error occurs while updating the nutrition table.
      */
-    private void updateNutritionTableByName(String text, int option) throws IOException {
+    private void updateNutritionTableByName(String text, int option){
         List<String[]> lines = function.nutritionFilter(text, option);
         DefaultTableModel nutTable = (DefaultTableModel) nutritionTable.getModel();
         nutTable.setRowCount(0);
@@ -918,7 +867,7 @@ public class App extends JFrame {
      * Updates the nutrition table with all available data.
      * @throws IOException if an I/O error occurs while updating the nutrition table.
      */
-    private void updateNutritionTable() throws IOException {
+    private void updateNutritionTable(){
         DefaultTableModel nutTable = (DefaultTableModel) nutritionTable.getModel();
         nutTable.setRowCount(0);
         List<String[]> lines = function.readFileContents(foodNutritionFilePath);
@@ -931,7 +880,7 @@ public class App extends JFrame {
      * Updates the diet table with data for the current user and date.
      * @throws IOException if an I/O error occurs while updating the diet table.
      */
-    private void updateDietTable() throws IOException {
+    private void updateDietTable() {
         DefaultTableModel dietTable = (DefaultTableModel) dietBFTable.getModel();
         dietTable.setRowCount(0);
         List<String[]> lines = function.readFileContents(dietFilePath);
@@ -947,7 +896,7 @@ public class App extends JFrame {
      * Updates the existing user command by reading user data from a file.
      * @throws IOException if an I/O error occurs while updating the existing user command.
      */
-    private void existingUserCommand() throws IOException {
+    private void existingUserCommand() {
         List<String[]> lines = function.readFileContents(newUserWeightFilePath);
         existingUserComboBox.removeAllItems();
         existingUserComboBox.addItem("EXISTING USER");

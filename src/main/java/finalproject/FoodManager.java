@@ -8,7 +8,7 @@ import java.time.LocalDate;
  */
 public class FoodManager {
     // Path to the file containing food nutrition data
-    protected final String foodNutritionFilePath = "/Users/oliviamiuki/final-project-v2-finals/foodnutrition.csv";
+    protected final String foodNutritionFilePath = "/Users/oliviamiuki/dietTracker/foodnutrition.csv";
 
     /**
      * Adds new food nutrition information and updates the corresponding file.

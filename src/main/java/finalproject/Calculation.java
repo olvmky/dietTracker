@@ -27,6 +27,15 @@ public class Calculation {
         return target;
     }
 
+    public Target minConsumption(double weight){
+        carb = weight * 2;
+        protein = weight * 1;
+        fat = weight * 1;
+        calories = weight * 10 + 167.5*6.25 - 29 * 5 - 161;
+        Target target = new Target(protein, carb, calories, fat);
+        return target;
+    }
+
     /**
      * Calculates the difference between the target consumption and current consumption.
      *
