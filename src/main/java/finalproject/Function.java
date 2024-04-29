@@ -166,6 +166,20 @@ public class Function {
     }
 
     /**
+     * Checks user's target weight according to the user id
+     * @param userId user's id
+     * @return user's target weight
+     */
+    public double targetWeight(int userId){
+        List<String[]> list = readFileContents(newUserWeightFilePath);
+        double weight = 0.0;
+        for(String[] i: list){
+            if(i[0].equals(String.valueOf(userId))) return Double.parseDouble(i[5]);
+        }
+        return weight;
+    }
+
+    /**
      * Retrieves the consumption by a specific category (e.g., breakfast, lunch) for a user on the current day.
      *
      * @param userId The unique identifier of the user.

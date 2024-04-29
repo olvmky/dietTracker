@@ -710,8 +710,9 @@ public class App extends JFrame {
         //Today's today consumption
         Target currTotalConsumption = function.consumptionByCategory(userId, 4);
         Target targetDiff = calculation.consumptionDiff(target, currTotalConsumption);
+        double targetWeight = function.targetWeight(userId);
 
-        JLabel targetHeading = new JLabel("ACCORDING TO YOUR TARGET WEIGHT");
+        JLabel targetHeading = new JLabel("ACCORDING TO YOUR TARGET WEIGHT " + targetWeight + " LBS");
         JLabel targetHeader = new JLabel("TARGET CONSUMPTION: ");
         targetHeading.setAlignmentX(Component.CENTER_ALIGNMENT);
         targetHeading.setFont(new Font("Arial", Font.BOLD, 12));
@@ -720,10 +721,34 @@ public class App extends JFrame {
         dietMidRightPanel.add(targetHeading);
         dietMidRightPanel.add(targetHeader);
 
-        JLabel targetCarb = new JLabel("CARB: " + targetDiff.getCarb());
-        JLabel targetProtein = new JLabel("PROTEIN: " + targetDiff.getProtein());
-        JLabel targetCalories = new JLabel("CALORIES: " + targetDiff.getCalories());
-        JLabel targetFat = new JLabel("FAT: " + targetDiff.getFat());
+        double targetCarbVal = targetDiff.getCarb();
+        double targetProteinVal = targetDiff.getProtein();
+        double targetCaloriesVal = targetDiff.getCalories();
+        double targetFatVal = targetDiff.getFat();
+        String targetCarbStr = "CARB: " + targetCarbVal;
+        String targetProteinStr = "PROTEIN: " + targetProteinVal;
+        String targetCaloriesStr = "CALORIES: " + targetCaloriesVal;
+        String targetFatStr = "FAT: " + targetFatVal;
+
+
+        if(targetCarbVal <= 0)  targetCarbStr = "REACHED TARGET CARB";
+        if(targetProteinVal <= 0)  targetProteinStr = "REACHED TARGET PROTEIN";
+        if(targetCaloriesVal <= 0) targetCaloriesStr = "REACHED TARGET CALORIES";
+        if(targetFatVal <= 0) targetFatStr = "REACHED TARGET FAT";
+
+        if(targetCarbVal <= 0 && targetProteinVal <= 0 && targetCaloriesVal <= 0){
+            targetCarbStr = "REACHED DAILY TARGET DIET!";
+            targetProteinStr = "";
+            targetCaloriesStr = "";
+        }
+        JLabel targetCarb = new JLabel(targetCarbStr);
+        JLabel targetProtein = new JLabel(targetProteinStr);
+        JLabel targetCalories = new JLabel(targetCaloriesStr);
+        JLabel targetFat = new JLabel(targetFatStr);
+        targetCarb.setAlignmentX(Component.CENTER_ALIGNMENT);
+        targetProtein.setAlignmentX(Component.CENTER_ALIGNMENT);
+        targetCalories.setAlignmentX(Component.CENTER_ALIGNMENT);
+        targetFat.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         dietMidRightPanel.add(targetCarb);
         dietMidRightPanel.add(targetProtein);
@@ -738,10 +763,28 @@ public class App extends JFrame {
         Target minTarget = function.targetConsumption(userId, 1);
         Target minDiff = calculation.consumptionDiff(minTarget, currTotalConsumption);
 
-        JLabel minCarb = new JLabel("CARB: " + minDiff.getCarb());
-        JLabel minProtein = new JLabel("PROTEIN: " + minDiff.getProtein());
-        JLabel minCalories = new JLabel("CALORIES: " + minDiff.getCalories());
-        JLabel minFat = new JLabel("FAT: " + minDiff.getFat());
+        String miniCarb = "CARB: " + minDiff.getCarb();
+        String miniProtein = "PROTEIN: " + minDiff.getProtein();
+        String miniCalories = "CALORIES: " + minDiff.getCalories();
+        String miniFat = "FAT: " + minDiff.getFat();
+        if(minDiff.getCarb() < 0) miniCarb = "REACHED MIN CARB";
+        if(minDiff.getProtein() < 0) miniProtein = "REACHED MIN PROTEIN";
+        if(minDiff.getCalories() < 0) miniCalories = "REACHED MIN CALORIES";
+        if(minDiff.getFat() < 0) miniFat = "REACHED MIN FAT";
+        if(minDiff.getCarb() <= 0 && minDiff.getProtein() <= 0 && minDiff.getCalories() <= 0){
+            miniCarb = "REACHED DAILY MIN DIET!";
+            miniProtein = "";
+            miniCalories = "";
+        }
+        JLabel minCarb = new JLabel(miniCarb);
+        JLabel minProtein = new JLabel(miniProtein);
+        JLabel minCalories = new JLabel(miniCalories);
+        JLabel minFat = new JLabel(miniFat);
+
+        minCarb.setAlignmentX(Component.CENTER_ALIGNMENT);
+        minProtein.setAlignmentX(Component.CENTER_ALIGNMENT);
+        minCalories.setAlignmentX(Component.CENTER_ALIGNMENT);
+        minFat.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         dietMidRightPanel.add(minCarb);
         dietMidRightPanel.add(minProtein);
