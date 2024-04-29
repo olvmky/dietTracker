@@ -291,5 +291,5 @@ new features:
 Added specific lbs on Diet page.
 Text changed if reached target diet/min diet.
 ```
-<img src="/update_screenshot/20240429_1.png" width="150" height="100">
-<img src="/update_screenshot/20240429_2.png" width="150" height="100">
+<img src="/update_screenshot/20240429_1.png" width="250" height="100">
+<img src="/update_screenshot/20240429_2.png" width="250" height="100">
