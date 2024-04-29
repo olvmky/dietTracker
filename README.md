@@ -289,7 +289,7 @@ More functions will be implement in times.
 2024.04.29
 new features:
 Added specific lbs on Diet page.
-Text changed if reached target diet/ min diet.
+Text changed if reached target diet/min diet.
 ```
-![Alt Text](/update_screenshot/20240429_1.png | width = 250)
-![Alt Text](/update_screenshot/20240429_2.png | width = 250)
+<img src="/update_screenshot/20240429_1.png" width="150" height="100">
+<img src="/update_screenshot/20240429_2.png" width="150" height="100">
