@@ -284,3 +284,12 @@ User can also keep track of their weight changes.
 * Edit file path from 'App.java', 'FoodManager.java', 'Function.java', 'WeightManager.java'.*
 More functions will be implement in times. 
 ```
+## Update
+```
+2024.04.29
+new features:
+Added specific lbs on Diet page.
+Text changed if reached target diet/min diet.
+```
+<img src="/update_screenshot/20240429_1.png" width="250" height="150">
+<img src="/update_screenshot/20240429_2.png" width="250" height="100">
