@@ -34,82 +34,69 @@ public class App extends JFrame {
             "/Users/oliviamiuki/dietTracker/dailyweight.csv";
     protected static final String dietFilePath =
             "/Users/oliviamiuki/dietTracker/dailyfood.csv";
-    private JButton newUserButton;
-    private JButton backFrontButton;
-    private JButton registerSubmitButton;
-    private JButton nutritionButton;
-    private JButton dietButton;
-    private JButton registerNutritionButton;
-    private JTextField nameInput;
-    private JTextField weightInput;
-    private JTextField heightInput;
-    private JTextField targetInput;
-    private JComboBox<String> existingUserComboBox;
-    private JPanel userRegisterPanel;
-    private JPanel frontPanel;
-    private JPanel centerWrapperPanel;
-    private JPanel nutritionPanel;
 
-    private JPanel nutritionTopPanel;
-    private JPanel nutritionMidPanel;
-    private JPanel nutritionBottomPanel;
-    private JButton nutDietButtom;
-    private JButton nutInputSubmitButton;
-    private JTextField nutFoodInput;
+    protected static final String weight = "WEIGHT";
+    protected static final String nutrition = "NUTRITION";
+    protected static final String main = "MAIN PAGE";
+
+    private final JButton newUserButton;
+    private final JButton backFrontButton;
+    private final JButton registerSubmitButton;
+    private final JButton nutritionButton;
+    private final JButton dietButton;
+    private final JButton registerNutritionButton;
+    private final JTextField nameInput;
+    private final JTextField weightInput;
+    private final JTextField heightInput;
+    private final JTextField targetInput;
+    private final JComboBox<String> existingUserComboBox;
+    private final JPanel userRegisterPanel;
+    private final JPanel centerWrapperPanel;
+    private final JPanel nutritionPanel;
+
+    private final JButton nutDietButtom;
+    private final JButton nutInputSubmitButton;
+    private final JTextField nutFoodInput;
     //after selecting the category, another jcombobox will filter only showing the selected category food
-    private JComboBox<String> nutCategorySelection;
-    private JComboBox<String> nutFilterBox;
+    private final JComboBox<String> nutCategorySelection;
+    private final JComboBox<String> nutFilterBox;
 
-    private JLabel newUserRegisterOutput;
-    private JTextArea outputTextArea;
-    private JButton nutNewUserButton;
-    private JButton nutMainButton;
-    private JButton nutAddButton;
-    private JButton nutWeightTrackButton;
-    private JTable nutritionTable;
-    private JTextField nutNameInput;
-    private JComboBox<String> nutCategoryInput;
-    private JTextField nutCarbInput;
-    private JTextField nutProteinInput;
-    private JTextField nutCaloriesInput;
-    private JTextField nutFatInput;
+    private final JButton nutMainButton;
+    private final JButton nutAddButton;
+    private final JButton nutWeightTrackButton;
+    private final JTable nutritionTable;
+    private final JTextField nutNameInput;
+    private final JComboBox<String> nutCategoryInput;
+    private final JTextField nutCarbInput;
+    private final JTextField nutProteinInput;
+    private final JTextField nutCaloriesInput;
+    private final JTextField nutFatInput;
 
-    private JPanel dietPanel;
-    private JPanel dietTopPanel;
-    private JPanel dietMidPanel;
-    private JPanel dietBottomPanel;
-    private JPanel dietMidLeftPanel;
-    private JPanel dietMidRightPanel;
-    private JButton dietWeightTrackButton;
-    private JButton dietMainButton;
-    private JButton dietNutButton;
-    private JButton dietSubmitButton;
-    private JTextField dietIngreInput;
-    private JTextField dietWeightInput;
-    private JComboBox<String> dietCategoryBox;
-    private JTable dietBFTable;
+    private final JPanel dietPanel;
+    private final JPanel dietMidRightPanel;
+    private final JButton dietWeightTrackButton;
+    private final JButton dietMainButton;
+    private final JButton dietNutButton;
+    private final JButton dietSubmitButton;
+    private final JTextField dietIngreInput;
+    private final JTextField dietWeightInput;
+    private final JComboBox<String> dietCategoryBox;
+    private final JTable dietBFTable;
 
-    private JPanel weightPanel;
-    private JPanel weightTopPanel;
-    private JPanel weightMidPanel;
-    private JPanel weightBottomPanel;
-    private JPanel weightMidLeftPanel;
-    private JPanel weightMidRightPanel;
-    private JButton weightMainButton;
-    private JButton weightDietButton;
-    private JButton weightNutritionButton;
-    private JButton weightSubmitButton;
-    private JLabel weightYesterdayDiff;
-    private JLabel weightFirstDayDiff;
-    private JLabel weightDays;
-    private JTextField dailyWeightInput;
-    private XYSeries series;
+    private final JPanel weightPanel;
+    private final JPanel weightMidLeftPanel;
+    private final JPanel weightMidRightPanel;
+    private final JButton weightMainButton;
+    private final JButton weightDietButton;
+    private final JButton weightNutritionButton;
+    private final JButton weightSubmitButton;
+    private final JTextField dailyWeightInput;
 
-    private Function function = new Function();
-    private FoodManager foodManager = new FoodManager();
-    private Calculation calculation = new Calculation();
-    private WeightManager weightManager = new WeightManager();
+    private final Function function = new Function();
+    private final FoodManager foodManager = new FoodManager();
+    private final Calculation calculation = new Calculation();
     private int userId;
+    private final WeightManager weightManager = new WeightManager();
     private String userName;
 
     /**
@@ -127,10 +114,10 @@ public class App extends JFrame {
          */
         centerWrapperPanel = new JPanel();
         centerWrapperPanel.setLayout(new BoxLayout(centerWrapperPanel, BoxLayout.Y_AXIS));
-        frontPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JPanel frontPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         newUserButton = new JButton("NEW USER");
         existingUserComboBox = new JComboBox<>();
-        nutritionButton = new JButton("NUTRITION");
+        nutritionButton = new JButton(nutrition);
         existingUserCommand();
 
         frontPanel.add(newUserButton);
@@ -155,7 +142,7 @@ public class App extends JFrame {
         userRegisterPanel.add(userRegisterTopPanel, BorderLayout.NORTH);
 
         //Create a scroll panel for the output of userRegisterPanel, add to center
-        outputTextArea = new JTextArea();
+        JTextArea outputTextArea = new JTextArea();
         outputTextArea.setEditable(false); // read-only
         JScrollPane outputScrollPane = new JScrollPane(outputTextArea);
         PrintStream printStream = new PrintStream(new CustomOutputStream(outputTextArea));
@@ -167,23 +154,22 @@ public class App extends JFrame {
         JPanel userRegisterBottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         userRegisterPanel.add(userRegisterBottomPanel, BorderLayout.SOUTH);
         JLabel nameLabel = new JLabel("NAME");
-        JLabel weightLabel = new JLabel("WEIGHT");
+        JLabel weightLabel = new JLabel(weight);
         JLabel heightLabel = new JLabel("HEIGHT");
         JLabel targetLabel = new JLabel("TARGET WEIGHT");
         nameInput = new JTextField(4);
         weightInput = new JTextField(4);
         heightInput = new JTextField(4);
         targetInput = new JTextField(4);
-        backFrontButton = new JButton("MAIN PAGE");
+        backFrontButton = new JButton(main);
         registerSubmitButton = new JButton("SUBMIT");
         dietButton = new JButton("DAILY DIET");
-        registerNutritionButton = new JButton("NUTRITION");
+        registerNutritionButton = new JButton(nutrition);
 
-        newUserRegisterOutput = new JLabel();
+        JLabel newUserRegisterOutput = new JLabel();
         newUserRegisterOutput.setPreferredSize(new Dimension(200, 20));
         newUserRegisterOutput.setFont(new Font("Arial", Font.PLAIN, 12));
         newUserRegisterOutput.setBackground(UIManager.getColor("Panel.background"));
-        JScrollPane filePathScrollPane = new JScrollPane(newUserRegisterOutput);
 
         userRegisterTopPanel.add(nameLabel);
         userRegisterTopPanel.add(nameInput);
@@ -203,16 +189,15 @@ public class App extends JFrame {
          */
         nutritionPanel = new JPanel();
         nutritionPanel.setLayout(new BorderLayout());
-        nutritionTopPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        nutritionMidPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        nutritionBottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JPanel nutritionTopPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JPanel nutritionMidPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JPanel nutritionBottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         nutritionPanel.add(nutritionTopPanel, BorderLayout.NORTH);
         nutritionPanel.add(nutritionMidPanel, BorderLayout.CENTER);
         nutritionPanel.add(nutritionBottomPanel, BorderLayout.SOUTH);
 
         nutDietButtom = new JButton("DIET TRACK");
-        nutNewUserButton = new JButton("NEW USER");
-        nutMainButton = new JButton("MAIN PAGE");
+        nutMainButton = new JButton(main);
         nutWeightTrackButton = new JButton("WEIGHT TRACK");
         nutritionBottomPanel.add(nutMainButton);
         nutritionBottomPanel.add(nutDietButtom);
@@ -317,14 +302,14 @@ public class App extends JFrame {
          */
         dietPanel = new JPanel();
         dietPanel.setLayout(new BorderLayout());
-        dietTopPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        dietMidPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        dietBottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JPanel dietTopPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JPanel dietMidPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JPanel dietBottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         dietPanel.add(dietTopPanel, BorderLayout.NORTH);
         dietPanel.add(dietMidPanel, BorderLayout.CENTER);
         dietPanel.add(dietBottomPanel, BorderLayout.SOUTH);
         //Diet panel left of middle panel
-        dietMidLeftPanel = new JPanel();
+        JPanel dietMidLeftPanel = new JPanel();
         dietMidPanel.setLayout(new FlowLayout(FlowLayout.LEFT)); // Set layout manager with left alignment
         dietMidLeftPanel.setLayout(new BoxLayout(dietMidLeftPanel, BoxLayout.Y_AXIS));
         dietMidLeftPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -344,7 +329,7 @@ public class App extends JFrame {
         JLabel lunchLabel = new JLabel("LUNCH");
         lunchLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        String[] dailyFoodCol = {"NAME", "CATEGORY", "WEIGHT", "CALORIES", "PROTEIN", "CARB", "FAT"};
+        String[] dailyFoodCol = {"NAME", "CATEGORY", weight, "CALORIES", "PROTEIN", "CARB", "FAT"};
         DefaultTableModel breakfastModel = new DefaultTableModel(dailyFoodCol, 0);
         dietBFTable = new JTable(breakfastModel);
         Font breakfastFont = dietBFTable.getTableHeader().getFont();
@@ -358,11 +343,11 @@ public class App extends JFrame {
 
         JLabel dietHeader = new JLabel("TODAY'S DIET");
         JLabel dietIngreLabel = new JLabel("INGREDIENT");
-        JLabel dietWeightLabel = new JLabel("WEIGHT");
+        JLabel dietWeightLabel = new JLabel(weight);
 
-        dietMainButton = new JButton("MAIN PAGE");
+        dietMainButton = new JButton(main);
         dietWeightTrackButton = new JButton("WEIGHT TRACK");
-        dietNutButton = new JButton("NUTRITION");
+        dietNutButton = new JButton(nutrition);
         dietIngreInput = new JTextField(4);
         dietWeightInput = new JTextField(4);
 
@@ -401,13 +386,13 @@ public class App extends JFrame {
         weightPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         weightPanel.setLayout(new BorderLayout());
 
-        weightTopPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        weightMidPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JPanel weightTopPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JPanel weightMidPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         weightMidPanel.setLayout(new FlowLayout(FlowLayout.LEFT)); // Set layout manager with left alignment
-        weightBottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JPanel weightBottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
-        weightMainButton = new JButton("MAIN PAGE");
-        weightNutritionButton = new JButton("NUTRITION");
+        weightMainButton = new JButton(main);
+        weightNutritionButton = new JButton(nutrition);
         weightDietButton = new JButton("DIET");
 
         weightBottomPanel.add(weightMainButton);
@@ -445,16 +430,14 @@ public class App extends JFrame {
      * @param args The command line arguments (unused)
      */
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                App app = null;
-                try {
-                    app = new App();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                app.setVisible(true);
+        SwingUtilities.invokeLater(() -> {
+            App app;
+            try {
+                app = new App();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
+            app.setVisible(true);
         });
 
     }
@@ -472,9 +455,7 @@ public class App extends JFrame {
             repaint();
         });
 
-        dietButton.addActionListener(e -> {
-            backToDiet();
-        });
+        dietButton.addActionListener(e -> backToDiet());
 
         /**
          * When press the button of submit, there should be an output panel
@@ -494,9 +475,7 @@ public class App extends JFrame {
         /**
          * back buttom for going back to main page
          */
-        backFrontButton.addActionListener(e -> {
-            backToMain();
-        });
+        backFrontButton.addActionListener(e -> backToMain());
 
         /**
          * change to nutrition panel
@@ -581,7 +560,7 @@ public class App extends JFrame {
             String text = (String) dietCategoryBox.getSelectedItem();
             Category category = foodManager.strToCategory(text);
             double weight = Double.parseDouble(dietWeightInput.getText());
-            function.addDailyFood(userId, ingredient, category, weight);
+            Function.addDailyFood(userId, ingredient, category, weight);
             updateDietText();
             updateDietTable();
 
@@ -609,15 +588,11 @@ public class App extends JFrame {
             }
         });
 
-        weightMainButton.addActionListener(e -> {
-            backToMain();
-        });
+        weightMainButton.addActionListener(e -> backToMain());
 
         weightNutritionButton.addActionListener(e -> backToNutrition());
 
-        weightDietButton.addActionListener(e -> {
-            backToDiet();
-        });
+        weightDietButton.addActionListener(e -> backToDiet());
 
         nutWeightTrackButton.addActionListener(e -> backToWeight());
 
@@ -676,7 +651,6 @@ public class App extends JFrame {
     /**
      * Navigates back to the main panel in the GUI.
      * This method also triggers the update of existing user commands.
-     * @throws IOException if an I/O error occurs while updating existing user commands.
      */
     private void backToMain() {
         getContentPane().removeAll();
@@ -780,7 +754,6 @@ public class App extends JFrame {
 
     /**
      * Updates the text displayed in the weight panel based on user data.
-     * @throws IOException if an I/O error occurs while updating the weight text.
      */
     private void updateWeightText(){
         Double[] diff = function.weightDifference(userId);
@@ -789,7 +762,7 @@ public class App extends JFrame {
         long days = -1 * function.daysUsedApp(userId);
 
         String daysDiff = "YOU HAVE USED THE APP FOR " + days + " DAYS";
-        weightDays = new JLabel(daysDiff);
+        JLabel weightDays = new JLabel(daysDiff);
         weightMidRightPanel.add(weightDays);
         weightDays.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -797,7 +770,7 @@ public class App extends JFrame {
         String firstDate = function.dayRegister(userId);
         if(firstDay < 0) comparisonFirstDay = "YOU HAVE LOST " + -1*firstDay + " LBS SINCE " + firstDate;
         else comparisonFirstDay = "YOU HAVE GAINED " + firstDay + " LBS SINCE " + firstDate;
-        weightFirstDayDiff = new JLabel(comparisonFirstDay);
+        JLabel weightFirstDayDiff = new JLabel(comparisonFirstDay);
         weightMidRightPanel.add(weightFirstDayDiff);
         weightFirstDayDiff.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -805,20 +778,20 @@ public class App extends JFrame {
         if(yesterday < 0) comparisonYesterday = "YOU HAVE LOST " + -1*yesterday + " lbs compared to yesterday";
         else comparisonYesterday = "You have gained " + yesterday + " lbs compared to yesterday.";
         comparisonYesterday = comparisonYesterday.toUpperCase();
-        weightYesterdayDiff = new JLabel(comparisonYesterday);
+        JLabel weightYesterdayDiff = new JLabel(comparisonYesterday);
         weightMidRightPanel.add(weightYesterdayDiff);
         weightYesterdayDiff.setAlignmentX(Component.CENTER_ALIGNMENT);
     }
-
+//
     /**
      * Generates and displays a graph representing the user's weight changes over time.
-     * @throws IOException if an I/O error occurs while generating the weight graph.
      */
     private void weightGraph(){
         List<String[]> data = function.readFileContents(weightFilePath);
-        series = new XYSeries("WEIGHT TRACK");
+        XYSeries series = new XYSeries("WEIGHT TRACK");
         LocalDate current = LocalDate.now();
-        double min = Double.MAX_VALUE, max = 0.0;
+        double min = Double.MAX_VALUE;
+        double max = 0.0;
         boolean dataFound = false;
         for(String[] i:data){
             if(userId == Integer.parseInt(i[0])){
@@ -888,7 +861,6 @@ public class App extends JFrame {
      * Updates the nutrition table by filtering the data based on the specified name and option.
      * @param text The text to filter by.
      * @param option The filtering option.
-     * @throws IOException if an I/O error occurs while updating the nutrition table.
      */
     private void updateNutritionTableByName(String text, int option){
         List<String[]> lines = function.nutritionFilter(text, option);
@@ -901,7 +873,6 @@ public class App extends JFrame {
 
     /**
      * Updates the nutrition table with all available data.
-     * @throws IOException if an I/O error occurs while updating the nutrition table.
      */
     private void updateNutritionTable(){
         DefaultTableModel nutTable = (DefaultTableModel) nutritionTable.getModel();
@@ -914,7 +885,6 @@ public class App extends JFrame {
 
     /**
      * Updates the diet table with data for the current user and date.
-     * @throws IOException if an I/O error occurs while updating the diet table.
      */
     private void updateDietTable() {
         DefaultTableModel dietTable = (DefaultTableModel) dietBFTable.getModel();
@@ -930,7 +900,6 @@ public class App extends JFrame {
 
     /**
      * Updates the existing user command by reading user data from a file.
-     * @throws IOException if an I/O error occurs while updating the existing user command.
      */
     private void existingUserCommand() {
         List<String[]> lines = function.readFileContents(newUserWeightFilePath);
@@ -945,7 +914,7 @@ public class App extends JFrame {
      * Custom output stream class used for redirecting output to a JTextArea.
      */
     protected static class CustomOutputStream extends OutputStream {
-        private JTextArea textArea;
+        private final JTextArea textArea;
         public CustomOutputStream(JTextArea textArea) {
             this.textArea = textArea;
         }
