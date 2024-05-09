@@ -282,7 +282,7 @@ public class Function {
      * @return A list of string arrays containing the weight information for the user.
      * @throws IOException If an I/O error occurs while reading the daily weight file.
      */
-    public List<String[]> weightInfo(int userId) throws IOException {
+    public List<String[]> weightInfo(int userId){
         List<String[]> data = readFileContents(dailyWeightFilePath);
         List<String[]> list = new ArrayList<>();
         for(String[] i:data){
@@ -301,7 +301,7 @@ public class Function {
      *         Index 0 represents the difference from the first day, and index 1 represents the difference from the previous day.
      * @throws IOException If an I/O error occurs while reading the daily weight file.
      */
-    public Double[] weightDifference(int userId) throws IOException {
+    public Double[] weightDifference(int userId){
         List<String[]> data = weightInfo(userId);
         if(data.size() < 2) return new Double[]{0.00, 0.00};
         double firstDayWeight = Double.parseDouble(data.get(0)[2]);
@@ -320,7 +320,7 @@ public class Function {
      * @return The number of days the user has used the application.
      * @throws IOException If an I/O error occurs while reading the daily weight file.
      */
-    public long daysUsedApp(int userId) throws IOException {
+    public long daysUsedApp(int userId){
         List<String[]> data = weightInfo(userId);
         LocalDate currentDate = LocalDate.now();
         String firstDay = data.get(0)[1];
@@ -336,7 +336,7 @@ public class Function {
      * @return The registration date of the user.
      * @throws IOException If an I/O error occurs while reading the daily weight file.
      */
-    public String dayRegister(int userId) throws IOException {
+    public String dayRegister(int userId){
         List<String[]> data = weightInfo(userId);
         return data.get(0)[1];
     }

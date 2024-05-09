@@ -599,16 +599,9 @@ public class App extends JFrame {
                 userName = split[1];
                 weightMidLeftPanel.removeAll();
                 weightMidRightPanel.removeAll();
-                try {
-                    updateWeightText();
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
-                try {
-                    weightGraph();
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
+                updateWeightText();
+                weightGraph();
+
                 getContentPane().removeAll();
                 getContentPane().add(weightPanel);
                 revalidate();
@@ -639,16 +632,9 @@ public class App extends JFrame {
             function.addDailyWeight(userId, userName, weight);
             weightMidLeftPanel.removeAll();
             weightMidRightPanel.removeAll();
-            try {
-                weightGraph();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-            try {
-                updateWeightText();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            weightGraph();
+            updateWeightText();
+
             revalidate();
             repaint();
         });
@@ -796,7 +782,7 @@ public class App extends JFrame {
      * Updates the text displayed in the weight panel based on user data.
      * @throws IOException if an I/O error occurs while updating the weight text.
      */
-    private void updateWeightText() throws IOException {
+    private void updateWeightText(){
         Double[] diff = function.weightDifference(userId);
         double firstDay = diff[0];
         double yesterday = diff[1];
@@ -828,11 +814,12 @@ public class App extends JFrame {
      * Generates and displays a graph representing the user's weight changes over time.
      * @throws IOException if an I/O error occurs while generating the weight graph.
      */
-    private void weightGraph() throws IOException {
+    private void weightGraph(){
         List<String[]> data = function.readFileContents(weightFilePath);
         series = new XYSeries("WEIGHT TRACK");
         LocalDate current = LocalDate.now();
         double min = Double.MAX_VALUE, max = 0.0;
+        boolean dataFound = false;
         for(String[] i:data){
             if(userId == Integer.parseInt(i[0])){
                 String[] split = i[1].split("-");
@@ -843,8 +830,14 @@ public class App extends JFrame {
                     min = Math.min(min, weight);
                     max = Math.max(max, weight);
                     series.add(Integer.parseInt(day), weight);
+                    dataFound = true;
                 }
             }
+        }
+        //If false, then there's no data for current month, return empty graph
+        if (!dataFound) {
+            min = 0;
+            max = 0;
         }
         String monthName = Month.of(current.getMonthValue()).
                 getDisplayName(java.time.format.TextStyle.FULL, java.util.Locale.getDefault());
