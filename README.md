@@ -284,6 +284,9 @@ User can also keep track of their weight changes.
 * Edit file path from 'App.java', 'FoodManager.java', 'Function.java', 'WeightManager.java'.*
 More functions will be implement in times. 
 ```
+![Alt Text](sample_photo.png)
+![Alt Text](sample_photo1.png)
+![Alt Text](sample_photo2.png)
 ## Update
 ```
 2024.04.29
