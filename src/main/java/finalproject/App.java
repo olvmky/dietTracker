@@ -1,24 +1,15 @@
 package finalproject;
 
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.*;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
+import finalproject.controller.DietController;
+import finalproject.controller.MainController;
+import finalproject.controller.NutritionController;
+import finalproject.controller.WeightController;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.time.LocalDate;
-import java.time.Month;
-import java.util.List;
 
 /**
  * Main class for application, have few pages
@@ -97,13 +88,16 @@ public class App extends JFrame {
     private final Calculation calculation = new Calculation();
     private int userId;
     private final WeightManager weightManager = new WeightManager();
+    private final DietController dietController = new DietController();
+    private final MainController mainController = new MainController();
+    private final NutritionController nutritionController = new NutritionController();
+    private final WeightController weightController = new WeightController();
     private String userName;
 
     /**
      * Layout for the application
-     * @throws IOException throws exception
      */
-    public App() throws IOException {
+    public App(){
         setTitle("Diet Tracker");
         setSize(800, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -118,7 +112,7 @@ public class App extends JFrame {
         newUserButton = new JButton("NEW USER");
         existingUserComboBox = new JComboBox<>();
         nutritionButton = new JButton(nutrition);
-        existingUserCommand();
+        mainController.existingUserCommand(newUserWeightFilePath, existingUserComboBox);
 
         frontPanel.add(newUserButton);
         frontPanel.add(nutritionButton);
@@ -432,14 +426,9 @@ public class App extends JFrame {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             App app;
-            try {
-                app = new App();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            app = new App();
             app.setVisible(true);
         });
-
     }
 
     /**
@@ -482,7 +471,7 @@ public class App extends JFrame {
          */
         nutritionButton.addActionListener(e -> {
             backToNutrition();
-            updateNutritionTable();
+            nutritionController.updateNutritionTable(foodNutritionFilePath, nutritionTable);
         });
 
         /**
@@ -490,24 +479,18 @@ public class App extends JFrame {
          */
         registerNutritionButton.addActionListener(e -> {
             backToNutrition();
-            updateNutritionTable();
+            nutritionController.updateNutritionTable(foodNutritionFilePath, nutritionTable);
         });
 
-        nutDietButtom.addActionListener(e -> {
-            backToDiet();
-        });
+        nutDietButtom.addActionListener(e -> backToDiet());
 
-        nutMainButton.addActionListener(e -> {
-            backToMain();
-        });
+        nutMainButton.addActionListener(e -> backToMain());
 
-        dietMainButton.addActionListener(e -> {
-            backToMain();
-        });
+        dietMainButton.addActionListener(e -> backToMain());
 
         dietNutButton.addActionListener(e -> {
             backToNutrition();
-            updateNutritionTable();
+            nutritionController.updateNutritionTable(foodNutritionFilePath, nutritionTable);
         });
 
         nutAddButton.addActionListener(e -> {
@@ -519,7 +502,7 @@ public class App extends JFrame {
             double calories = Double.parseDouble(nutCaloriesInput.getText());
             double fat = Double.parseDouble(nutFatInput.getText());
             foodManager.addNewFoodNutrition(foodCategory, name, carb, protein, calories, fat);
-            updateNutritionTable();
+            nutritionController.updateNutritionTable(foodNutritionFilePath, nutritionTable);
         });
 
         /**
@@ -527,7 +510,7 @@ public class App extends JFrame {
          */
         nutInputSubmitButton.addActionListener(e -> {
             String text = nutFoodInput.getText();
-            updateNutritionTableByName(text, 1);
+            nutritionController.updateNutritionTableByName(text, 1, nutritionTable);
         });
 
         /**
@@ -535,7 +518,7 @@ public class App extends JFrame {
          */
         nutCategorySelection.addActionListener(e -> {
             String text = (String) nutCategorySelection.getSelectedItem();
-            updateNutritionTableByName(text, 0);
+            nutritionController.updateNutritionTableByName(text, 0, nutritionTable);
         });
 
         /**
@@ -546,13 +529,11 @@ public class App extends JFrame {
             String text = (String) nutFilterBox.getSelectedItem();
             int option = text.equals("PROTEIN > 15%") ? 3:2;
             if(text.equals("FILTER BY")) {
-                updateNutritionTable();
-            }
-            else {
-                updateNutritionTableByName("", option);
+                nutritionController.updateNutritionTable(foodNutritionFilePath, nutritionTable);
+            } else {
+                nutritionController.updateNutritionTableByName("", option, nutritionTable);
             }
         });
-
 
         dietSubmitButton.addActionListener(e -> {
             String ingredient = dietIngreInput.getText();
@@ -561,9 +542,8 @@ public class App extends JFrame {
             Category category = foodManager.strToCategory(text);
             double weight = Double.parseDouble(dietWeightInput.getText());
             Function.addDailyFood(userId, ingredient, category, weight);
-            updateDietText();
-            updateDietTable();
-
+            dietController.updateDietText(userId, dietMidRightPanel);
+            dietController.updateDietTable(userId, dietFilePath, dietBFTable);
         });
 
         /**
@@ -578,8 +558,8 @@ public class App extends JFrame {
                 userName = split[1];
                 weightMidLeftPanel.removeAll();
                 weightMidRightPanel.removeAll();
-                updateWeightText();
-                weightGraph();
+                weightController.updateWeightText(userId, weightMidRightPanel);
+                weightController.weightGraph(weightFilePath, userId, weightMidLeftPanel);
 
                 getContentPane().removeAll();
                 getContentPane().add(weightPanel);
@@ -607,8 +587,8 @@ public class App extends JFrame {
             function.addDailyWeight(userId, userName, weight);
             weightMidLeftPanel.removeAll();
             weightMidRightPanel.removeAll();
-            weightGraph();
-            updateWeightText();
+            weightController.weightGraph(weightFilePath, userId, weightMidLeftPanel);
+            weightController.updateWeightText(userId, weightMidRightPanel);
 
             revalidate();
             repaint();
@@ -621,9 +601,9 @@ public class App extends JFrame {
      */
     private void backToDiet() {
         getContentPane().removeAll();
-        updateDietTable();
+        dietController.updateDietTable(userId, dietFilePath, dietBFTable);
         getContentPane().add(dietPanel);
-        updateDietText();
+        dietController.updateDietText(userId, dietMidRightPanel);
         revalidate();
         repaint();
     }
@@ -654,260 +634,10 @@ public class App extends JFrame {
      */
     private void backToMain() {
         getContentPane().removeAll();
-        existingUserCommand();
+        mainController.existingUserCommand(newUserWeightFilePath, existingUserComboBox);
         getContentPane().add(centerWrapperPanel);
         revalidate();
         repaint();
-    }
-
-    /**
-     * Updates the text displayed in the diet panel based on user data.
-     */
-    private void updateDietText() {
-        dietMidRightPanel.removeAll();
-        Target target = function.targetConsumption(userId, 0);
-
-        //Today's today consumption
-        Target currTotalConsumption = function.consumptionByCategory(userId, 4);
-        Target targetDiff = calculation.consumptionDiff(target, currTotalConsumption);
-        double targetWeight = function.targetWeight(userId);
-
-        JLabel targetHeading = new JLabel("ACCORDING TO YOUR TARGET WEIGHT " + targetWeight + " LBS");
-        JLabel targetHeader = new JLabel("TARGET CONSUMPTION: ");
-        targetHeading.setAlignmentX(Component.CENTER_ALIGNMENT);
-        targetHeading.setFont(new Font("Arial", Font.BOLD, 12));
-        targetHeader.setAlignmentX(Component.CENTER_ALIGNMENT);
-        targetHeader.setFont(new Font("Arial", Font.BOLD, 12));
-        dietMidRightPanel.add(targetHeading);
-        dietMidRightPanel.add(targetHeader);
-
-        double targetCarbVal = targetDiff.getCarb();
-        double targetProteinVal = targetDiff.getProtein();
-        double targetCaloriesVal = targetDiff.getCalories();
-        double targetFatVal = targetDiff.getFat();
-        String targetCarbStr = "CARB: " + targetCarbVal;
-        String targetProteinStr = "PROTEIN: " + targetProteinVal;
-        String targetCaloriesStr = "CALORIES: " + targetCaloriesVal;
-        String targetFatStr = "FAT: " + targetFatVal;
-
-
-        if(targetCarbVal <= 0)  targetCarbStr = "REACHED TARGET CARB";
-        if(targetProteinVal <= 0)  targetProteinStr = "REACHED TARGET PROTEIN";
-        if(targetCaloriesVal <= 0) targetCaloriesStr = "REACHED TARGET CALORIES";
-        if(targetFatVal <= 0) targetFatStr = "REACHED TARGET FAT";
-
-        if(targetCarbVal <= 0 && targetProteinVal <= 0 && targetCaloriesVal <= 0){
-            targetCarbStr = "REACHED DAILY TARGET DIET!";
-            targetProteinStr = "";
-            targetCaloriesStr = "";
-        }
-        JLabel targetCarb = new JLabel(targetCarbStr);
-        JLabel targetProtein = new JLabel(targetProteinStr);
-        JLabel targetCalories = new JLabel(targetCaloriesStr);
-        JLabel targetFat = new JLabel(targetFatStr);
-        targetCarb.setAlignmentX(Component.CENTER_ALIGNMENT);
-        targetProtein.setAlignmentX(Component.CENTER_ALIGNMENT);
-        targetCalories.setAlignmentX(Component.CENTER_ALIGNMENT);
-        targetFat.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        dietMidRightPanel.add(targetCarb);
-        dietMidRightPanel.add(targetProtein);
-        dietMidRightPanel.add(targetCalories);
-        dietMidRightPanel.add(targetFat);
-
-        JLabel minHeading = new JLabel("MINIMUM CONSUMPTION FOR THE DAY: ");
-        minHeading.setAlignmentX(Component.CENTER_ALIGNMENT);
-        minHeading.setFont(new Font("Arial", Font.BOLD, 12));
-        dietMidRightPanel.add(minHeading);
-
-        Target minTarget = function.targetConsumption(userId, 1);
-        Target minDiff = calculation.consumptionDiff(minTarget, currTotalConsumption);
-
-        String miniCarb = "CARB: " + minDiff.getCarb();
-        String miniProtein = "PROTEIN: " + minDiff.getProtein();
-        String miniCalories = "CALORIES: " + minDiff.getCalories();
-        String miniFat = "FAT: " + minDiff.getFat();
-        if(minDiff.getCarb() < 0) miniCarb = "REACHED MIN CARB";
-        if(minDiff.getProtein() < 0) miniProtein = "REACHED MIN PROTEIN";
-        if(minDiff.getCalories() < 0) miniCalories = "REACHED MIN CALORIES";
-        if(minDiff.getFat() < 0) miniFat = "REACHED MIN FAT";
-        if(minDiff.getCarb() <= 0 && minDiff.getProtein() <= 0 && minDiff.getCalories() <= 0){
-            miniCarb = "REACHED DAILY MIN DIET!";
-            miniProtein = "";
-            miniCalories = "";
-        }
-        JLabel minCarb = new JLabel(miniCarb);
-        JLabel minProtein = new JLabel(miniProtein);
-        JLabel minCalories = new JLabel(miniCalories);
-        JLabel minFat = new JLabel(miniFat);
-
-        minCarb.setAlignmentX(Component.CENTER_ALIGNMENT);
-        minProtein.setAlignmentX(Component.CENTER_ALIGNMENT);
-        minCalories.setAlignmentX(Component.CENTER_ALIGNMENT);
-        minFat.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        dietMidRightPanel.add(minCarb);
-        dietMidRightPanel.add(minProtein);
-        dietMidRightPanel.add(minCalories);
-        dietMidRightPanel.add(minFat);
-    }
-
-    /**
-     * Updates the text displayed in the weight panel based on user data.
-     */
-    private void updateWeightText(){
-        Double[] diff = function.weightDifference(userId);
-        double firstDay = diff[0];
-        double yesterday = diff[1];
-        long days = -1 * function.daysUsedApp(userId);
-
-        String daysDiff = "YOU HAVE USED THE APP FOR " + days + " DAYS";
-        JLabel weightDays = new JLabel(daysDiff);
-        weightMidRightPanel.add(weightDays);
-        weightDays.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        String comparisonFirstDay;
-        String firstDate = function.dayRegister(userId);
-        if(firstDay < 0) comparisonFirstDay = "YOU HAVE LOST " + -1*firstDay + " LBS SINCE " + firstDate;
-        else comparisonFirstDay = "YOU HAVE GAINED " + firstDay + " LBS SINCE " + firstDate;
-        JLabel weightFirstDayDiff = new JLabel(comparisonFirstDay);
-        weightMidRightPanel.add(weightFirstDayDiff);
-        weightFirstDayDiff.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        String comparisonYesterday;
-        if(yesterday < 0) comparisonYesterday = "YOU HAVE LOST " + -1*yesterday + " lbs compared to yesterday";
-        else comparisonYesterday = "You have gained " + yesterday + " lbs compared to yesterday.";
-        comparisonYesterday = comparisonYesterday.toUpperCase();
-        JLabel weightYesterdayDiff = new JLabel(comparisonYesterday);
-        weightMidRightPanel.add(weightYesterdayDiff);
-        weightYesterdayDiff.setAlignmentX(Component.CENTER_ALIGNMENT);
-    }
-//
-    /**
-     * Generates and displays a graph representing the user's weight changes over time.
-     */
-    private void weightGraph(){
-        List<String[]> data = function.readFileContents(weightFilePath);
-        XYSeries series = new XYSeries("WEIGHT TRACK");
-        LocalDate current = LocalDate.now();
-        double min = Double.MAX_VALUE;
-        double max = 0.0;
-        boolean dataFound = false;
-        for(String[] i:data){
-            if(userId == Integer.parseInt(i[0])){
-                String[] split = i[1].split("-");
-                int month = Integer.parseInt(split[1]);
-                if(current.getMonthValue() == month && current.getYear() == Integer.parseInt(split[0])){
-                    String day = split[2];
-                    double weight = Double.parseDouble(i[2]);
-                    min = Math.min(min, weight);
-                    max = Math.max(max, weight);
-                    series.add(Integer.parseInt(day), weight);
-                    dataFound = true;
-                }
-            }
-        }
-        //If false, then there's no data for current month, return empty graph
-        if (!dataFound) {
-            min = 0;
-            max = 0;
-        }
-        String monthName = Month.of(current.getMonthValue()).
-                getDisplayName(java.time.format.TextStyle.FULL, java.util.Locale.getDefault());
-        monthName = monthName.toUpperCase();
-        XYSeriesCollection dataset = new XYSeriesCollection();
-        dataset.addSeries(series);
-        JFreeChart chart = ChartFactory.createScatterPlot(
-                "WEIGHT CHANGES", // Chart title
-                "FOR " + monthName,               // X-axis label
-                "WEIGHTS IN LBS",            // Y-axis label
-                dataset,             // Dataset
-                PlotOrientation.VERTICAL,
-                true,                // Show legend
-                true,               // Use tooltips
-                false
-        );
-
-        XYPlot plot = (XYPlot) chart.getPlot();
-        XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
-        renderer.setSeriesLinesVisible(0, true); // Show lines for series 0
-        plot.setRenderer(renderer);
-
-        NumberAxis yAxis = (NumberAxis) chart.getXYPlot().getRangeAxis();
-        yAxis.setRange(min - 0.5, max + 0.5);
-
-        ValueAxis xAxis = chart.getXYPlot().getDomainAxis();
-        xAxis.setStandardTickUnits(createStandardTickUnits());
-
-        ChartPanel chartPanel = new ChartPanel(chart);
-        chartPanel.setPreferredSize(new Dimension(400, 350));
-        weightMidLeftPanel.add(chartPanel);
-    }
-
-    /**
-     * Creates standard tick units for the x-axis of a chart.
-     * These tick units are typically used to define the spacing of tick marks on the x-axis.
-     * Adjustments can be made based on specific requirements.
-     * @return The standard tick units for the x-axis.
-     */
-    private TickUnits createStandardTickUnits() {
-        TickUnits units = new TickUnits();
-        units.add(new NumberTickUnit(1)); // Adjust this based on your specific requirements
-        units.add(new NumberTickUnit(2));
-        return units;
-    }
-
-    /**
-     * Updates the nutrition table by filtering the data based on the specified name and option.
-     * @param text The text to filter by.
-     * @param option The filtering option.
-     */
-    private void updateNutritionTableByName(String text, int option){
-        List<String[]> lines = function.nutritionFilter(text, option);
-        DefaultTableModel nutTable = (DefaultTableModel) nutritionTable.getModel();
-        nutTable.setRowCount(0);
-        for(String[] i:lines){
-            nutTable.addRow(new Object[]{i[0], i[1], i[2], i[3], i[4], i[5]});
-        }
-    }
-
-    /**
-     * Updates the nutrition table with all available data.
-     */
-    private void updateNutritionTable(){
-        DefaultTableModel nutTable = (DefaultTableModel) nutritionTable.getModel();
-        nutTable.setRowCount(0);
-        List<String[]> lines = function.readFileContents(foodNutritionFilePath);
-        for(String[] i:lines){
-            nutTable.addRow(new Object[]{i[0], i[1], i[2], i[3], i[4], i[5]});
-        }
-    }
-
-    /**
-     * Updates the diet table with data for the current user and date.
-     */
-    private void updateDietTable() {
-        DefaultTableModel dietTable = (DefaultTableModel) dietBFTable.getModel();
-        dietTable.setRowCount(0);
-        List<String[]> lines = function.readFileContents(dietFilePath);
-        LocalDate current = LocalDate.now();
-        for(String[] i:lines){
-            if(userId == Integer.parseInt(i[0]) && current.toString().equals(i[1])){
-                dietTable.addRow(new Object[]{i[2], i[3], i[4], i[5], i[6], i[7], i[8]});
-            }
-        }
-    }
-
-    /**
-     * Updates the existing user command by reading user data from a file.
-     */
-    private void existingUserCommand() {
-        List<String[]> lines = function.readFileContents(newUserWeightFilePath);
-        existingUserComboBox.removeAllItems();
-        existingUserComboBox.addItem("EXISTING USER");
-        for(String[] i:lines){
-            existingUserComboBox.addItem(i[0] + " " + i[2]);
-        }
     }
 
     /**
